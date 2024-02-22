@@ -1,4 +1,4 @@
-package com.example.workshopmongo.entities;
+package com.example.workshopmongo.models.entities;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +14,10 @@ public class User {
   private String id;
   private String name;
   private String email;
+
+  // referencias para meus posts ou seja diz qual post é do usuario buscado
+  @DBRef(lazy = true)
+  private List<Post> posts = new ArrayList<>();
 
   public User() {
   }
