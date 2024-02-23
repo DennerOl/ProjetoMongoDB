@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,4 +29,13 @@ public class UserService {
     User entity = result.orElseThrow(() -> new ResourceNotFoundException("Objeto não encontrado"));
     return new UserDTO(entity);
   }
+
+  public UserDTO insert(UserDTO dto) {
+    User entity = new User();
+    ModelMapper modelMapper = new ModelMapper();
+    modelMapper.map(dto, entity);
+    entity = repository.insert(entity);
+    return new UserDTO(entity);
+  }
+
 }
