@@ -2,16 +2,14 @@ package com.example.workshopmongo.services;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
+import com.example.workshopmongo.models.dto.PostDTO;
 import com.example.workshopmongo.models.dto.UserDTO;
 import com.example.workshopmongo.models.entities.User;
 import com.example.workshopmongo.repositories.UserRepository;
@@ -61,4 +59,8 @@ public class UserService {
     repository.deleteById(id);
   }
 
+  public List<PostDTO> getUserPosts(String id) {
+    User user = getEntityById(id);
+    return user.getPosts().stream().map(x -> new PostDTO(x)).collect(Collectors.toList());
+  }
 }
